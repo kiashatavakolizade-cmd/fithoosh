@@ -658,7 +658,7 @@ export default function App() {
 
             <div className="flex-1 bg-slate-50 relative w-full h-full">
               <iframe
-                src={`https://www.youtube.com/embed?listType=search&list=${currentExerciseQuery}`}
+                src={`https://www.youtube.com/results?search_query=${currentExerciseQuery}`}
                 title="YouTube Video Search"
                 className="w-full h-full border-none relative bg-transparent"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -671,3 +671,4 @@ export default function App() {
     </div>
   );
 }
+
