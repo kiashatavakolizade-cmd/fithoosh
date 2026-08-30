@@ -71,7 +71,7 @@ export default function App() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return await response.json();
       } catch (e) {
         if (i === retries - 1) throw e;
