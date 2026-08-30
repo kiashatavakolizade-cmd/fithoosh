@@ -1,13 +1,23 @@
-```react
-import React, { useState, useRef } from 'react';
-import { Camera, Dumbbell, Utensils, Activity, Calendar, Target, Image as ImageIcon, Video, X, Loader2, ChevronDown, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  Camera, 
+  Dumbbell, 
+  Utensils, 
+  Activity, 
+  Calendar, 
+  Target, 
+  Video, 
+  X, 
+  Loader2, 
+  CheckCircle2 
+} from 'lucide-react';
 
-// کلید API از محیط دریافت می‌شود
+// کلید API را در این متغیر قرار دهید
 const apiKey = ""; 
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('workout');
-  
+
   // --- وضعیت‌های تمرین ---
   const [userData, setUserData] = useState({
     height: '',
@@ -71,7 +81,7 @@ export default function App() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return await response.json();
       } catch (e) {
         if (i === retries - 1) throw e;
@@ -197,7 +207,6 @@ export default function App() {
 
   // تابع باز کردن مودال ویدیو
   const openVideoModal = (exerciseName) => {
-    // ایجاد عبارت جستجوی مناسب و Encode کردن آن
     const query = encodeURIComponent(`آموزش حرکت ${exerciseName}`);
     setCurrentExerciseQuery(query);
     setVideoModalOpen(true);
@@ -237,7 +246,7 @@ export default function App() {
         
         {/* === تب برنامه تمرینی === */}
         {activeTab === 'workout' && (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="space-y-8">
             
             {/* فرم دریافت اطلاعات */}
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
@@ -265,7 +274,7 @@ export default function App() {
                     
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-1">هدف از تمرین</label>
-                      <input type="text" name="goal" value={userData.goal} onChange={handleInputChange} className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="مثلا: کاهش وزن..." />
+                      <input type="text" name="goal" value={userData.goal} onChange={handleInputChange} className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="مثلا: افزایش حجم، فیتنس..." />
                     </div>
 
                     <div>
@@ -280,7 +289,7 @@ export default function App() {
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-1">امکانات ورزشی</label>
-                      <textarea name="equipment" value={userData.equipment} onChange={handleInputChange} rows="2" className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none resize-none" placeholder="مثلا: فقط ۲ تا دمبل ۵ کیلویی دارم..."></textarea>
+                      <textarea name="equipment" value={userData.equipment} onChange={handleInputChange} rows="2" className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none resize-none" placeholder="مثلا: میله بارفیکس، دمبل یا فقط وزن بدن..."></textarea>
                     </div>
                   </div>
 
@@ -358,7 +367,6 @@ export default function App() {
                                 <p className="text-xs text-slate-500 mt-2"><span className="font-bold text-emerald-600">نکته:</span> {ex.tips}</p>
                               </div>
                               
-                              {/* دکمه جدید برای باز کردن مودال ویدیو */}
                               <button 
                                 onClick={() => openVideoModal(ex.name)}
                                 className="shrink-0 flex items-center justify-center gap-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg text-sm font-medium transition border border-red-100"
@@ -378,9 +386,9 @@ export default function App() {
           </div>
         )}
 
-        {/* === تب یخچال هوشمند === (بدون تغییر) */}
+        {/* === تب یخچال هوشمند === */}
         {activeTab === 'diet' && (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="space-y-8">
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
               <div className="bg-slate-50 border-b border-slate-200 px-6 py-4 flex flex-col md:flex-row justify-between gap-4">
                 <div>
@@ -394,7 +402,7 @@ export default function App() {
                   onChange={(e) => setFridgeItems(e.target.value)}
                   rows="4" 
                   className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-orange-500 outline-none resize-none" 
-                  placeholder="مثلا: ۲ عدد تخم مرغ، اسفناج..."
+                  placeholder="مثلا: ۲ عدد تخم مرغ، اسفناج، گوجه فرنگی..."
                 ></textarea>
 
                 {dietError && <div className="mt-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm">{dietError}</div>}
@@ -411,9 +419,9 @@ export default function App() {
 
             {dietPlan && (
               <div className="bg-white rounded-2xl shadow-sm border border-orange-200 overflow-hidden">
-                 <div className="bg-orange-50 border-b border-orange-100 px-6 py-5 flex items-center justify-between">
+                <div className="bg-orange-50 border-b border-orange-100 px-6 py-5 flex items-center justify-between">
                   <h2 className="text-xl font-bold text-orange-800">{dietPlan.recipeName}</h2>
-                  <span className="bg-white text-orange-600 px-2 py-1 rounded text-xs font-bold">{dietPlan.calories}</span>
+                  <span className="bg-white text-orange-600 px-3 py-1 rounded-full text-xs font-bold shadow-sm">{dietPlan.calories}</span>
                 </div>
                 <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
                   <div className="md:col-span-1 bg-slate-50 p-5 rounded-xl border border-slate-200 h-fit">
@@ -421,7 +429,7 @@ export default function App() {
                     <ul className="space-y-2">
                       {dietPlan.ingredients.map((ing, i) => (
                         <li key={i} className="text-sm text-slate-700 flex items-center gap-2">
-                           <div className="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></div>{ing}
+                          <div className="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></div>{ing}
                         </li>
                       ))}
                     </ul>
@@ -430,6 +438,7 @@ export default function App() {
                       <p className="text-sm text-slate-700">{dietPlan.macros}</p>
                     </div>
                   </div>
+
                   <div className="md:col-span-2 space-y-6">
                     <div>
                       <h3 className="font-bold text-slate-800 mb-4 text-lg">طرز تهیه</h3>
@@ -442,6 +451,13 @@ export default function App() {
                         ))}
                       </ol>
                     </div>
+
+                    {dietPlan.whyGood && (
+                      <div className="bg-orange-50/50 p-4 rounded-xl border border-orange-100 text-sm">
+                        <h4 className="font-bold text-orange-800 mb-1">چرا این پیشنهاد مناسب شماست؟</h4>
+                        <p className="text-slate-600">{dietPlan.whyGood}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -453,7 +469,7 @@ export default function App() {
 
       {/* === مودال نمایش ویدیو جستجوی یوتیوب === */}
       {videoModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
           <div className="bg-white rounded-2xl w-full max-w-4xl h-[80vh] flex flex-col shadow-2xl overflow-hidden">
             {/* هدر مودال */}
             <div className="px-4 py-3 bg-slate-100 border-b border-slate-200 flex justify-between items-center shrink-0">
@@ -471,8 +487,7 @@ export default function App() {
             
             {/* iframe یوتیوب */}
             <div className="flex-1 bg-slate-50 relative w-full h-full">
-              {/* متن لودینگ موقت تا زمانی که iframe بارگزاری شود */}
-              <div className="absolute inset-0 flex items-center justify-center text-slate-400 -z-0">
+              <div className="absolute inset-0 flex items-center justify-center text-slate-400 z-0">
                 <div className="flex flex-col items-center gap-2">
                   <Loader2 className="w-8 h-8 animate-spin" />
                   <span>در حال بارگزاری نتایج از یوتیوب...</span>
@@ -493,4 +508,4 @@ export default function App() {
     </div>
   );
 }
-```
+
