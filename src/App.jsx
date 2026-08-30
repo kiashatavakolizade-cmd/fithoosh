@@ -78,12 +78,14 @@ async function callApi(payload) {
     body: JSON.stringify(payload),
   });
 
+  const responseText = await response.text();
   let result = null;
 
   try {
-    result = await response.json();
+    result = JSON.parse(responseText);
   } catch {
-    throw new Error("پاسخ نامعتبر از سرور دریافت شد.");
+    console.error("پاسخ خام سرور (JSON نیست):", responseText);
+    throw new Error(`خطای سرور: ${responseText.slice(0, 100)}...`);
   }
 
   if (!response.ok) {
@@ -92,6 +94,7 @@ async function callApi(payload) {
 
   return result;
 }
+
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("workout");
